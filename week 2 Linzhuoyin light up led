@@ -1,0 +1,27 @@
+import RPi.GPIO as GPIO
+import time
+import wave
+import pyaudio
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(16,GPIO.OUT)
+GPIO.output(16,True)
+pwm_led=GPIO.PWM(16,500)
+pwm_led.start(100)
+i=1
+try:
+    while i:
+        pwm_led.ChangeDutyCycle(i)
+        i=i+1
+        time.sleep(0.5)
+        if i==99:
+            while i>2:
+                pwm_led.ChangeDutyCycle(i)
+                i=i-1
+                time.sleep(0.05)
+finally:
+    GPIO.output(16,False)
+    GPIO.cleanup()
+#GPIO.output(16,False)
+#GPIO.cleanup()
